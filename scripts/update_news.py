@@ -29,6 +29,11 @@ FEEDS = [
     ("technik", "Innovation KI Technik NVIDIA AMD Microsoft when:14d"),
     ("gaming", "PC Nvidia AMD Intel Grafikkarten Gaming when:14d"),
     ("gaming", "Rainbow Six Siege Ubisoft Update when:14d"),
+    ("politik", "Bundestag Bundesregierung Gesetze Entscheidungen Politik Deutschland when:14d"),
+    ("politik", "Bundesrat Bundestag Haushalt Gesetzesreform politische Entwicklung when:14d"),
+    ("politik", "site:bundesregierung.de Politik Gesetz Beschluss when:14d"),
+    ("politik", "site:bundestag.de Plenum Beschlüsse Bundestag when:14d"),
+    ("luftfahrt", "Flug umgeleitet Notlandung Squawk 7700 Luftfahrt Zwischenfall when:7d"),
     ("luftfahrt", "site:airbus.com/en/newsroom/press-releases when:14d"),
     ("technik", "site:blogs.nvidia.com when:14d"),
 ]
@@ -36,11 +41,20 @@ TRUSTED_OFFICIAL = {
     "airbus.com", "boeing.com", "blogs.nvidia.com", "nvidia.com",
     "amd.com", "hsv.de", "iserlohn-roosters.de", "bundesregierung.de",
     "munich-airport.de", "lufthansa.com", "eurocontrol.int",
+    "bundestag.de", "bundesrat.de",
 }
 UNCERTAIN = re.compile(
     r"\b(?:gerücht(?:e)?|angeblich|mutmaßlich|unbestätigt|insider|"
     r"leak(?:s|ed)?|geleakt|soll(?:en|te)?|könnte|reportedly|rumou?rs?|"
     r"may|could|speculation)\b", re.I
+)
+# Kennzeichnung wichtiger Schlagwörter, KEIN amtlicher Echtzeit-Notfallalarm.
+# Eine einzelne Schlagzeile kann irreführend sein und wird nicht unabhängig verifiziert.
+BREAKING = re.compile(
+    r"\\b(?:eilmeldung|breaking(?: news)?|notlandung|"
+    r"flugzeugnotfall|flughafensperrung|flughafen gesperrt|"
+    r"flugverkehr eingestellt|evakuiert|squawk 7700|"
+    r"rücktritt|misstrauensvotum)\\b", re.I
 )
 UA = "NexusPersonalNews/2.0 (+public RSS feed)"
 
@@ -88,6 +102,7 @@ def parse_feed(raw: bytes, category: str, today) -> list[dict]:
             "date": date.isoformat(), "priority": 2 if status == "rumor" else 3,
             "title": title[:240], "summary": summary, "source": publisher[:90],
             "url": link, "tags": ["RSS", "automatisch"],
+            "breaking": bool(BREAKING.search(title) and (today - date).days <= 1),
         })
     return results
 
