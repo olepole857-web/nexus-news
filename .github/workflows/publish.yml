@@ -26,6 +26,19 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Python und Dashboard-Syntax prüfen
+        run: |
+          python -m py_compile scripts/update_news.py
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          html = Path('index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script(?:\\s+[^>]*)?>([\\s\\S]*?)</script>', html)
+          assert scripts, 'JavaScript source is missing'
+          Path('/tmp/nexus-dashboard.js').write_text(scripts[-1], encoding='utf-8')
+          assert 'politik' in html and 'breaking-panel' in html
+          PY
+          node --check /tmp/nexus-dashboard.js
       - name: Nachrichten aus RSS-Feeds abrufen
         run: python scripts/update_news.py
       - name: Statische Webseite vorbereiten
