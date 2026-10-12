@@ -32,3 +32,20 @@ Design und Kategorien: `index.html`.
 Kuratierten Ausgangsstand: `news.json` (wird beim Build aktualisiert, nicht ins Repo zurückgeschrieben).
 
 Das Dashboard ist ein persönliches Informationsprojekt, kein redaktionell geprüftes Nachrichtenangebot.
+
+
+## Neue Funktionen: stündliche Aktualisierung, Politik, Eilmeldungen
+
+- Unter **Deutsche Politik** erscheinen Nachrichten und amtliche Mitteilungen aus Deutschland. Quellenstatus bitte beachten, Informationen werden neutral aufgeführt.
+- **Eilmeldungen** werden durch Hinweise auf bestimmte Schlagwörter in RSS-Titeln erkannt. Die Kennzeichnung ist **kein bestätigter Notfall oder amtlicher Warnhinweis**.
+- Der GitHub-Pages-Workflow ist auf `0 * * * *` (zur vollen UTC-Stunde) eingestellt. GitHub Actions garantiert keine punktgenauen Ausführungszeiten; besonders zur vollen Stunde sind Verzögerungen oder ausfallende Läufe möglich.
+- Die geöffnete Webseite fragt etwa alle 90 Sekunden die zuletzt bereitgestellten News-Daten ab.
+- **Eil-Hinweise** im Dashboard können aktiviert werden. Browser-Hinweise werden nur bei geöffneter Seite ausgegeben; iPhone-Hintergrund-Push ist ausdrücklich noch nicht eingebaut.
+- GitHub Pages kann ohne separaten Push-Dienst keine zuverlässigen Benachrichtigungen bei geschlossener Seite auf ein iPhone versenden.
+
+### Flightradar24 Gold
+Gold beinhaltet **keine Flightradar24-API-Zugangsrechte**. Die offizielle API ist ein separates Angebot. Daher ist weder ein direkter Notfall-Livefeed noch eine automatische Umleitungs-Erkennung aus FR24-Daten im Dashboard integriert. Ein Link öffnet Flightradar24.
+
+Die offizielle Flightradar24-App bietet unter **Alerts** Push für **7700** (allgemeiner Notfall) und **7600** (Funkstörung). Diese App-Benachrichtigungen sind die bessere Quelle für zeitkritische Squawk-Ereignisse.
+
+Für das künftige echte NEXUS-iPhone-Pushsystem wäre ein Push-Dienst mit erlaubter Datenquelle, Anmeldelogik und Speicherung von Push-Abonnements erforderlich. Keine geheimen API-Schlüssel in diesem öffentlichen GitHub-Repository speichern.
