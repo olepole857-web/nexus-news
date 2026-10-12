@@ -34,7 +34,7 @@ jobs:
           html = Path('index.html').read_text(encoding='utf-8')
           scripts = html.rsplit('<script>', 1)[-1].split('</script>', 1) if '<script>' in html else []
           assert scripts, 'JavaScript source is missing'
-          Path('/tmp/nexus-dashboard.js').write_text(scripts[-1], encoding='utf-8')
+          Path('/tmp/nexus-dashboard.js').write_text(scripts[0], encoding='utf-8')
           assert 'politik' in html and 'breaking-panel' in html
           PY
           node --check /tmp/nexus-dashboard.js
