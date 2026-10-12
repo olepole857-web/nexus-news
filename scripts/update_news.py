@@ -51,10 +51,10 @@ UNCERTAIN = re.compile(
 # Kennzeichnung wichtiger Schlagwörter, KEIN amtlicher Echtzeit-Notfallalarm.
 # Eine einzelne Schlagzeile kann irreführend sein und wird nicht unabhängig verifiziert.
 BREAKING = re.compile(
-    r"\\b(?:eilmeldung|breaking(?: news)?|notlandung|"
+    r"\b(?:eilmeldung|breaking(?: news)?|notlandung|"
     r"flugzeugnotfall|flughafensperrung|flughafen gesperrt|"
     r"flugverkehr eingestellt|evakuiert|squawk 7700|"
-    r"rücktritt|misstrauensvotum)\\b", re.I
+    r"rücktritt|misstrauensvotum)\b", re.I
 )
 UA = "NexusPersonalNews/2.0 (+public RSS feed)"
 
