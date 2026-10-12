@@ -1,0 +1,292 @@
+{
+  "generated_at": "2026-10-12T13:06:00+02:00",
+  "mode": "Kuratierter Ausgangsstand",
+  "stories": [
+    {
+      "id": "muc-rail-20261012",
+      "cat": "luftfahrt",
+      "status": "confirmed",
+      "date": "2026-10-12",
+      "priority": 1,
+      "title": "Flughafen München: Bahn-Anreise vom 12. bis 16. Oktober unterbrochen",
+      "summary": "Wegen Bauarbeiten fallen direkte Zugverbindungen zum Airport aus. Bus-Ersatzverkehr ist eingerichtet; der Flughafen selbst ist nicht geschlossen.",
+      "source": "Flughafen München",
+      "url": "https://www.munich-airport.de/oeffentliche-verkehrsmittel-90215",
+      "tags": [
+        "Flughafen",
+        "Sperrung",
+        "München"
+      ]
+    },
+    {
+      "id": "air-avo-20261009",
+      "cat": "luftfahrt",
+      "status": "confirmed",
+      "date": "2026-10-09",
+      "priority": 2,
+      "title": "Avolon bestellt 110 Airbus-Flugzeuge – A330neo und A320neo",
+      "summary": "Airbus meldet einen Auftrag über 35 A330-900 und 75 Flugzeuge der A320neo-Familie.",
+      "source": "Airbus",
+      "url": "https://www.airbus.com/en/newsroom/press-releases/2026-10-avolon-orders-35-airbus-a330-900-and-75-a320neo-family-aircraft",
+      "tags": [
+        "Airbus",
+        "A330neo",
+        "A320neo"
+      ]
+    },
+    {
+      "id": "air-kal-20261009",
+      "cat": "luftfahrt",
+      "status": "rumor",
+      "date": "2026-10-09",
+      "priority": 1,
+      "title": "Kalitta Air soll acht Airbus A350F bestellt haben",
+      "summary": "Reuters berichtet unter Berufung auf Quellen über den mutmaßlichen Auftrag. Kalitta Air hat eine Bestellung nicht selbst bestätigt.",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/business/aerospace-defense/us-based-kalitta-air-orders-airbus-freighter-jets-sources-say-2026-10-09/",
+      "tags": [
+        "Airbus",
+        "Boeing",
+        "Gerücht",
+        "A350F"
+      ]
+    },
+    {
+      "id": "air-a350f-20260929",
+      "cat": "luftfahrt",
+      "status": "confirmed",
+      "date": "2026-09-29",
+      "priority": 2,
+      "title": "Airbus A350F hat den Erstflug erfolgreich absolviert",
+      "summary": "Der neue Frachter absolvierte am 29. September seinen ersten Testflug. Die Flugtestkampagne läuft an.",
+      "source": "Airbus",
+      "url": "https://www.airbus.com/en/newsroom/press-releases/2026-09-airbus-a350f-freighter-successfully-performs-its-maiden-flight",
+      "tags": [
+        "Airbus",
+        "A350F",
+        "Erstflug"
+      ]
+    },
+    {
+      "id": "air-klm-20261002",
+      "cat": "luftfahrt",
+      "status": "confirmed",
+      "date": "2026-10-02",
+      "priority": 3,
+      "title": "KLM übernimmt ihren ersten Airbus A350-900",
+      "summary": "Airbus bestätigt die Übergabe des ersten A350-900 an KLM. Vorgesehen ist das Flugzeug für Langstrecken ab Amsterdam.",
+      "source": "Airbus",
+      "url": "https://www.airbus.com/en/newsroom/press-releases/2026-10-klm-royal-dutch-airlines-takes-delivery-of-its-first-airbus-a350-900",
+      "tags": [
+        "Airbus",
+        "KLM",
+        "A350"
+      ]
+    },
+    {
+      "id": "air-riyadh-20261008",
+      "cat": "luftfahrt",
+      "status": "report",
+      "date": "2026-10-08",
+      "priority": 1,
+      "title": "Nach Angriffen: mehrere Airlines setzen Riad-Flüge aus",
+      "summary": "Reuters meldete nach Angriffen auf Saudi-Arabien Flugaussetzungen, darunter bei Lufthansa. Der Stand kann sich kurzfristig ändern.",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/world/middle-east/lufthansa-air-india-suspend-flights-riyadh-after-houthi-attacks-2026-10-08/",
+      "tags": [
+        "Flughafen",
+        "Riad",
+        "Flugstörung"
+      ]
+    },
+    {
+      "id": "hsv-remberg-20261011",
+      "cat": "fussball",
+      "status": "report",
+      "date": "2026-10-11",
+      "priority": 1,
+      "title": "HSV: Sorge um Nicolai Remberg nach Verletzung",
+      "summary": "Nach dem Hoffenheim-Spiel wird über einen möglicherweise längeren Ausfall berichtet. Eine endgültige Diagnose war im Bericht noch offen.",
+      "source": "WELT / dpa",
+      "url": "https://www.welt.de/regionales/baden-wuerttemberg/article6aca6a4e8f1ae671e6ab95de/absolut-beschissen-hsv-droht-monatelanger-remberg-ausfall.html",
+      "tags": [
+        "HSV",
+        "Verletzung"
+      ]
+    },
+    {
+      "id": "bayern-vuskovic-20261012",
+      "cat": "fussball",
+      "status": "rumor",
+      "date": "2026-10-12",
+      "priority": 2,
+      "title": "Transfergerücht: Bayern soll Vušković weiter beobachten",
+      "summary": "Ein Fußballportal berichtet über mögliches Interesse an Luka Vušković. Eine neue Verpflichtung ist nicht bestätigt.",
+      "source": "Bavarian Football Works",
+      "url": "https://www.bavarianfootballworks.com/transfer-rumors/265733/bayern-munich-still-eyeing-luka-vuskovic-brighton-transfer",
+      "tags": [
+        "HSV",
+        "Transfer",
+        "Bayern",
+        "Gerücht"
+      ]
+    },
+    {
+      "id": "hsv-win-20261011",
+      "cat": "fussball",
+      "status": "report",
+      "date": "2026-10-11",
+      "priority": 2,
+      "title": "HSV gewinnt spektakulär mit 3:2 in Hoffenheim",
+      "summary": "Nach Rückstand dreht der HSV die Partie; Miro Muheim trifft in der Nachspielzeit zum Auswärtssieg.",
+      "source": "WELT / dpa",
+      "url": "https://www.welt.de/regionales/baden-wuerttemberg/article6aca5cb661b3d4c01d3e2659/hsv-kaempft-sich-zurueck-3-2-bei-der-tsg-hoffenheim.html",
+      "tags": [
+        "HSV",
+        "Bundesliga"
+      ]
+    },
+    {
+      "id": "hsv-strikers-20261009",
+      "cat": "fussball",
+      "status": "report",
+      "date": "2026-10-09",
+      "priority": 3,
+      "title": "HSV: Moffi und Poulsen wieder mögliche Kaderoptionen",
+      "summary": "Nach Verletzungssorgen sind beide Stürmer laut Bericht wieder Trainings- und Einsatzkandidaten.",
+      "source": "WELT / dpa",
+      "url": "https://www.welt.de/regionales/baden-wuerttemberg/article6ac7938279dbba342d294014/sturmsorgen-beim-hsv-moffi-und-poulsen-optionen-fuer-kader.html",
+      "tags": [
+        "HSV",
+        "Kader"
+      ]
+    },
+    {
+      "id": "eco-growth-20261008",
+      "cat": "wirtschaft",
+      "status": "report",
+      "date": "2026-10-08",
+      "priority": 1,
+      "title": "Bundesregierung hebt Wachstumsprognose für Deutschland an",
+      "summary": "Laut Reuters erwartet die Regierung für 2026 ein Wachstum von 1,3 % und für 2027 von 1,1 %. Es handelt sich um Prognosen, keine Ist-Werte.",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/business/german-government-raises-growth-forecasts-2026-2027-2026-10-08/",
+      "tags": [
+        "Deutschland",
+        "Konjunktur",
+        "BIP"
+      ]
+    },
+    {
+      "id": "eco-db-20261011",
+      "cat": "wirtschaft",
+      "status": "report",
+      "date": "2026-10-11",
+      "priority": 2,
+      "title": "Deutsche-Bank-Chef warnt vor Risiken für ausländische Investitionen",
+      "summary": "Christian Sewing äußert laut Reuters Bedenken zur Standortattraktivität Deutschlands.",
+      "source": "Reuters",
+      "url": "https://www.reuters.com/business/deutsche-bank-chief-warns-german-election-results-worrying-foreign-investors-2026-10-11/",
+      "tags": [
+        "Deutschland",
+        "Investitionen"
+      ]
+    },
+    {
+      "id": "tech-nvidia-20261007",
+      "cat": "technik",
+      "status": "confirmed",
+      "date": "2026-10-07",
+      "priority": 1,
+      "title": "NVIDIA und Microsoft kündigen RTX Spark für lokale KI an",
+      "summary": "Die Unternehmen stellen Pläne für Windows-PCs mit KI-Agenten und RTX Spark vor. Vorbestellungen wurden angekündigt.",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/",
+      "tags": [
+        "NVIDIA",
+        "Microsoft",
+        "KI",
+        "PC"
+      ]
+    },
+    {
+      "id": "tech-amd-20260928",
+      "cat": "technik",
+      "status": "confirmed",
+      "date": "2026-09-28",
+      "priority": 2,
+      "title": "AMD kündigt Übernahme von World Labs an",
+      "summary": "AMD hat eine definitive Vereinbarung über den geplanten Kauf des KI-Forschungslabors bekanntgegeben. Der Abschluss stand noch aus.",
+      "source": "AMD Investor Relations",
+      "url": "https://ir.amd.com/news-events/press-releases/detail/1299/amd-to-acquire-world-labs-to-advance-the-future-of-ai-compute",
+      "tags": [
+        "AMD",
+        "KI",
+        "Unternehmen"
+      ]
+    },
+    {
+      "id": "tech-amdhelios-20261005",
+      "cat": "technik",
+      "status": "confirmed",
+      "date": "2026-10-05",
+      "priority": 3,
+      "title": "AMD zeigt Einblicke in die Helios-KI-Infrastruktur",
+      "summary": "Der Hersteller veröffentlicht Einblicke in Konzeption und Aufbau seiner rackbasierten KI-Plattform.",
+      "source": "AMD Newsroom",
+      "url": "https://newsroom.amd.com/",
+      "tags": [
+        "AMD",
+        "KI",
+        "Hardware"
+      ]
+    },
+    {
+      "id": "pc-5090-20261011",
+      "cat": "gaming",
+      "status": "rumor",
+      "date": "2026-10-11",
+      "priority": 1,
+      "title": "Gerücht: NVIDIA könnte Produktion der RTX 5090 stoppen",
+      "summary": "Tom’s Hardware greift Insiderberichte über eine mögliche Produktionsverlagerung auf. NVIDIA hat den Schritt nicht offiziell bestätigt.",
+      "source": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/pc-components/gpus/nvidia-reportedly-halts-geforce-rtx-5090-production-in-favor-of-ai-data-center-and-professional-gpus-impending-supply-drought-expected-to-drive-up-prices-rtx-5080-24gb-rumored-as-new-gaming-flagship",
+      "tags": [
+        "RTX 5090",
+        "NVIDIA",
+        "Gerücht"
+      ]
+    },
+    {
+      "id": "pc-geforce-20261008",
+      "cat": "gaming",
+      "status": "confirmed",
+      "date": "2026-10-08",
+      "priority": 2,
+      "title": "GeForce NOW: „Gears of War: E-Day“ ist verfügbar",
+      "summary": "NVIDIA kündigt den Start auf GeForce NOW und weitere neu hinzugefügte Spiele an.",
+      "source": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-gears-of-war-e-day/",
+      "tags": [
+        "Gaming",
+        "GeForce NOW"
+      ]
+    },
+    {
+      "id": "pc-games-20261009",
+      "cat": "gaming",
+      "status": "report",
+      "date": "2026-10-09",
+      "priority": 3,
+      "title": "PC-Releases 2026: Übersicht kommender Spiele aktualisiert",
+      "summary": "PC Gamer bündelt angekündigte Veröffentlichungen und Termine. Termine können sich nachträglich verschieben.",
+      "source": "PC Gamer",
+      "url": "https://www.pcgamer.com/games/new-pc-games-2026/",
+      "tags": [
+        "PC",
+        "Gaming",
+        "Release"
+      ]
+    }
+  ]
+}
