@@ -20,22 +20,45 @@ import urllib.request
 ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = ROOT / "news.json"
 FEEDS = [
-    ("luftfahrt", "Flughafen gesperrt OR Flughafensperrung OR Flugausfall when:14d"),
-    ("luftfahrt", "Airbus Boeing neue Flugzeuge Triebwerke Bestellungen when:14d"),
-    ("fussball", "Hamburger SV HSV Transfer Gerücht Spieler when:14d"),
-    ("fussball", "Bundesliga Transfer Gerücht Fußball when:14d"),
-    ("fussball", "Iserlohn Roosters Spieler Gerüchte when:14d"),
-    ("wirtschaft", "deutsche Wirtschaft Konjunktur Unternehmen BIP when:14d"),
-    ("technik", "Innovation KI Technik NVIDIA AMD Microsoft when:14d"),
-    ("gaming", "PC Nvidia AMD Intel Grafikkarten Gaming when:14d"),
-    ("gaming", "Rainbow Six Siege Ubisoft Update when:14d"),
-    ("politik", "Bundestag Bundesregierung Gesetze Entscheidungen Politik Deutschland when:14d"),
-    ("politik", "Bundesrat Bundestag Haushalt Gesetzesreform politische Entwicklung when:14d"),
-    ("politik", "site:bundesregierung.de Politik Gesetz Beschluss when:14d"),
-    ("politik", "site:bundestag.de Plenum Beschlüsse Bundestag when:14d"),
-    ("luftfahrt", "Flug umgeleitet Notlandung Squawk 7700 Luftfahrt Zwischenfall when:7d"),
-    ("luftfahrt", "site:airbus.com/en/newsroom/press-releases when:14d"),
-    ("technik", "site:blogs.nvidia.com when:14d"),
+    # Luftfahrt: Sicherheitslage, Airport-Betrieb und Hersteller
+    ("luftfahrt", "Flughafen gesperrt OR Flughafenstörung OR Flugausfall when:4d"),
+    ("luftfahrt", "Luftraum gesperrt NOTAM Umleitung Annullierungen when:4d"),
+    ("luftfahrt", "Flughafen Riad Saudi Arabien Flugverkehr Reise Lage when:7d"),
+    ("luftfahrt", "Airbus Boeing neue Flugzeuge Triebwerke Bestellungen when:7d"),
+    ("luftfahrt", "Lufthansa Eurowings Ryanair Fluggesellschaft Streik Flugplan when:4d"),
+    ("luftfahrt", "Flug umgeleitet Notlandung Luftfahrt Zwischenfall when:4d"),
+    ("luftfahrt", "Flughafen Düsseldorf Köln Dortmund Frankfurt München aktuell when:3d"),
+    ("luftfahrt", "site:airbus.com/en/newsroom/press-releases when:7d"),
+    ("luftfahrt", "site:boeing.com/principles/vision.page aviation when:7d"),
+    # Querbezüge: Regierungsreisen, Politiker an Flughäfen, Konflikte
+    ("politik", "Ministerin Minister Regierung Flughafen festgesessen Reise Flug gestrandet when:7d"),
+    ("politik", "Katherina Reiche Riad Flughafen Saudi Arabien when:7d"),
+    ("politik", "Deutschland Regierung Reise Flughafen Sicherheitslage Ausland when:4d"),
+    ("politik", "Bundesregierung Bundestag aktuelle Eilmeldung Entscheidung when:3d"),
+    ("politik", "Bundestag Bundesregierung Gesetze Entscheidungen Politik Deutschland when:7d"),
+    ("politik", "Bundesrat Bundestag Haushalt Gesetzesreform politische Entwicklung when:7d"),
+    ("politik", "deutsche Ministerin Minister Regierung Koalition Streit Beschluss when:4d"),
+    ("politik", "site:bundesregierung.de Pressemitteilung Beschluss when:7d"),
+    ("politik", "site:bundestag.de aktuelle Meldungen when:7d"),
+    # Fußball / Sport
+    ("fussball", "Hamburger SV HSV Transfer Gerücht Spieler when:7d"),
+    ("fussball", "Hamburger SV Trainer Verletzung Aufstellung Fußball Nachrichten when:4d"),
+    ("fussball", "Bundesliga Transfer Gerücht Fußball when:7d"),
+    ("fussball", "Iserlohn Roosters Spieler Gerüchte DEL when:7d"),
+    # Wirtschaft und Politik/Wirtschaft-Schnittstelle
+    ("wirtschaft", "Deutschland Wirtschaft Konjunktur Unternehmen Arbeitsmarkt BIP when:4d"),
+    ("wirtschaft", "deutsche Wirtschaft Inflation Energiepreise Zinsen Unternehmen when:4d"),
+    ("wirtschaft", "Wirtschaftsministerin Reiche Konferenz Politik Wirtschaft when:7d"),
+    ("wirtschaft", "DAX Börse Wirtschaft Börsenentwicklung Deutschland when:3d"),
+    ("wirtschaft", "Industrie Automobilhersteller Werke Stellenabbau Deutschland when:4d"),
+    # Technik, KI, PC und Games
+    ("technik", "Innovation KI Technik NVIDIA AMD Microsoft when:4d"),
+    ("technik", "Apple Google OpenAI Anthropic künstliche Intelligenz Produkt when:4d"),
+    ("technik", "Neuerungen Technik Smartphone Software Chip Forschung when:4d"),
+    ("technik", "site:blogs.nvidia.com when:7d"),
+    ("gaming", "PC Nvidia AMD Intel Grafikkarten Gaming when:4d"),
+    ("gaming", "Rainbow Six Siege Ubisoft Update when:7d"),
+    ("gaming", "Steam Playstation Xbox neue Spiele Updates when:4d"),
 ]
 TRUSTED_OFFICIAL = {
     "airbus.com", "boeing.com", "blogs.nvidia.com", "nvidia.com",
@@ -71,7 +94,7 @@ def official_source(source_url: str) -> bool:
 def parse_feed(raw: bytes, category: str, today) -> list[dict]:
     root = ElementTree.fromstring(raw)
     results = []
-    for entry in root.findall("./channel/item")[:22]:
+    for entry in root.findall("./channel/item")[:30]:
         title = unescape((entry.findtext("title") or "").strip())
         link = (entry.findtext("link") or "").strip()
         source = entry.find("source")
@@ -81,7 +104,8 @@ def parse_feed(raw: bytes, category: str, today) -> list[dict]:
         if title.lower().endswith(" - " + publisher.lower()):
             title = title[:-(len(publisher) + 3)]
         try:
-            date = parsedate_to_datetime(entry.findtext("pubDate") or "").date()
+            published = parsedate_to_datetime(entry.findtext("pubDate") or "")
+            date = published.date()
         except (ValueError, TypeError, OverflowError):
             continue
         if (not title or not link.startswith("https://")
@@ -99,7 +123,8 @@ def parse_feed(raw: bytes, category: str, today) -> list[dict]:
         item_id = hashlib.sha256(key.encode("utf-8")).hexdigest()[:18]
         results.append({
             "id": "rss-" + item_id, "cat": category, "status": status,
-            "date": date.isoformat(), "priority": 2 if status == "rumor" else 3,
+            "date": date.isoformat(), "published_at": published.isoformat(timespec="minutes"),
+            "priority": 2 if status == "rumor" else 3,
             "title": title[:240], "summary": summary, "source": publisher[:90],
             "url": link, "tags": ["RSS", "automatisch"],
             "breaking": bool(BREAKING.search(title) and (today - date).days <= 1),
@@ -144,9 +169,31 @@ def headline_tokens(title: str) -> set[str]:
             or w in {"hsv", "bvb", "spd", "afd", "bsw", "ki"})
             and w not in TITLE_STOPWORDS}
 
+
+# Jede Meldung kann in mehreren Themenwelten auftauchen,
+# ohne auf der Übersichtsseite doppelt gezählt zu werden.
+TOPIC_TERMS = {
+    "luftfahrt": re.compile(r"\b(?:flughaf\w*|airport\w*|flugzeug\w*|flugverkehr\w*|fluggesellschaf\w*|flieger\w*|flug\w*|luftraum\w*|luftfahr\w*|airbus|boeing|lufthansa|eurowings|ryanair|airport|airline\w*|pilot\w*|notlandung|startbahn\w*)\b", re.I),
+    "politik": re.compile(r"\b(?:minister\w*|bundesregierung|bundestag|bundesrat|kanzler\w*|partei\w*|koalition\w*|präsident\w*|präsidentschaft|cdu|csu|spd|afd|bsw|grüne\w*|bundespolit\w*|regierungs\w*|eu-kommission|staatsoberhaupt\w*)\b", re.I),
+    "wirtschaft": re.compile(r"\b(?:wirtschaft\w*|dax|inflation\w*|unternehmen\w*|konjunktur\w*|industrie\w*|arbeitsmarkt\w*|arbeitsplätze|energiepreis\w*|energieversorgung|börsen\w*|aktien\w*|milliarden\w*|rezession\w*|zoll\w*|export\w*|investition\w*|zins\w*)\b", re.I),
+    "technik": re.compile(r"\b(?:ki|künstliche intelligenz|artificial intelligence|openai|anthropic|chatgpt|chip\w*|innovation\w*|technologie\w*|software\w*|nvidia|microsoft|apple|google|robot\w*)\b", re.I),
+    "gaming": re.compile(r"\b(?:gaming|videospiel\w*|playstation|xbox|steam|ubisoft|rainbow six|grafikkart\w*|geforce|radeon|nintendo|spielekonsole\w*)\b", re.I),
+    "fussball": re.compile(r"\b(?:fußball\w*|fussball\w*|bundesliga|hamburger sv|hsv|transfer\w*|torjäger\w*|trainerwechsel|iserlohn roosters|eishockey|del)\b", re.I),
+}
+
+def story_categories(story: dict) -> list[str]:
+    primary = story.get("cat", "politik")
+    result = [primary]
+    for previous in story.get("categories", []):
+        if previous in TOPIC_TERMS and previous not in result:
+            result.append(previous)
+    for theme, pattern in TOPIC_TERMS.items():
+        if theme not in result and pattern.search(story.get("title", "")):
+            result.append(theme)
+    return result
+
 def is_same_event(a: dict, b: dict) -> bool:
-    if a.get("cat") != b.get("cat"):
-        return False
+    cross_topic = a.get("cat") != b.get("cat")
     try:
         days = abs((datetime.fromisoformat(a["date"][:10]) -
                     datetime.fromisoformat(b["date"][:10])).days)
@@ -166,6 +213,8 @@ def is_same_event(a: dict, b: dict) -> bool:
         return False
     jaccard = len(common) / max(1, len(left | right))
     containment = len(common) / max(1, min(len(left), len(right)))
+    if cross_topic:
+        return len(common) >= 4 and (jaccard >= 0.72 or containment >= 0.92)
     return jaccard >= 0.58 or (len(common) >= 4 and containment >= 0.84)
 
 def source_entries(story: dict) -> list[dict]:
@@ -215,6 +264,8 @@ def group_stories(stories) -> list[dict]:
                 if url and url not in urls:
                     sources.append(source)
                     urls.add(url)
+        merged["categories"] = list(dict.fromkeys(
+            theme for item in group for theme in story_categories(item)))
         merged["sources"] = sources[:18]
         merged["source_count"] = len(sources)
         merged["breaking"] = any(item.get("breaking") for item in group)
@@ -256,10 +307,11 @@ def main():
     unique = {story["id"]: story for story in curated}
     for story in fetched:
         unique[story["id"]] = story
-    stories = sorted(group_stories(unique.values()), key=lambda x: x["date"], reverse=True)[:150]
+    stories = sorted(group_stories(unique.values()), key=lambda x: x.get("published_at", x["date"]), reverse=True)[:350]
     output = {
         "generated_at": now.isoformat(timespec="seconds"),
-        "mode": "Automatischer RSS-Abruf",
+        "mode": "Erweiterter RSS-Abruf · stündlich",
+        "feed_count": successful,
         "stories": stories
     }
     DATA_FILE.write_text(
