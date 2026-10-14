@@ -3,6 +3,59 @@
   "mode": "Kuratierter Ausgangsstand",
   "stories": [
     {
+      "id": "cross-reiche-riad-return-20261013",
+      "cat": "politik",
+      "categories": [
+        "politik",
+        "luftfahrt",
+        "wirtschaft"
+      ],
+      "status": "confirmed",
+      "date": "2026-10-13",
+      "published_at": "2026-10-13T13:04:00+02:00",
+      "priority": 1,
+      "title": "Nach Flughafensperrung in Riad: Wirtschaftsministerin Reiche wieder in Berlin",
+      "summary": "Nach Angriffen auf den Flughafen Riad konnte Katherina Reiche nicht planmäßig aus Saudi-Arabien abreisen. Laut Bestätigung ihrer Sprecherin vom 13. Oktober ist sie inzwischen sicher nach Berlin zurückgekehrt.",
+      "source": "ZDFheute / Ministeriumssprecherin",
+      "url": "https://www.zdfheute.de/politik/saudi-arabien-riad-jemen-flug-reiche-100.html",
+      "tags": [
+        "Politik & Luftfahrt",
+        "Riad",
+        "Reiche"
+      ],
+      "sources": [
+        {
+          "source": "ZDFheute / Sprecherin",
+          "title": "Reiche nach Flughafen-Sperre sicher aus Riad zurück",
+          "url": "https://www.zdfheute.de/politik/saudi-arabien-riad-jemen-flug-reiche-100.html",
+          "status": "confirmed",
+          "date": "2026-10-13"
+        },
+        {
+          "source": "Bundesregierung",
+          "title": "Regierungspressekonferenz vom 12. Oktober: Reise der Ministerin",
+          "url": "https://www.bundesregierung.de/breg-de/aktuelles/regierungspressekonferenz-vom-12-oktober-2026-2456646",
+          "status": "confirmed",
+          "date": "2026-10-12"
+        },
+        {
+          "source": "Reuters / t-online",
+          "title": "Ministerin Reiche steckt nach Flughafenangriff in Riad fest",
+          "url": "https://www.t-online.de/nachrichten/deutschland/aussenpolitik/id_101476364/riad-huthis-greifen-flughafen-an-ministerin-reiche-steckt-fest.html",
+          "status": "report",
+          "date": "2026-10-11"
+        },
+        {
+          "source": "RND / dpa",
+          "title": "Reiche kann nach Berlin zurückkehren",
+          "url": "https://www.rnd.de/politik/in-riad-gestrandet-jetzt-auf-dem-heimweg-reiche-kann-zurueck-nach-berlin-27O74N45ZNCVBD6NECJQQU4ZOQ.html",
+          "status": "report",
+          "date": "2026-10-12"
+        }
+      ],
+      "breaking": false
+    },
+    {
       "id": "muc-rail-20261012",
       "cat": "luftfahrt",
       "status": "confirmed",
