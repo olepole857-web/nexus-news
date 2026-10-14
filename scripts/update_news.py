@@ -119,6 +119,111 @@ def download_feed(query: str) -> bytes:
         return response.read(2_500_000)
 
 
+
+# Konservative Ereignis-Bündelung: Nur sehr ähnliche Schlagzeilen,
+# gleiche Themenwelt und enges Zeitfenster. Im Zweifel getrennt lassen.
+import unicodedata
+
+TITLE_STOPWORDS = {
+    "der","die","das","den","dem","des","ein","eine","einer","eines","einem",
+    "und","oder","mit","von","vom","zur","zum","aus","auf","für","bei",
+    "über","unter","nach","wegen","durch","gegen","sich","auch","noch",
+    "aber","dass","haben","hat","wird","werden","ist","sind","als",
+    "am","im","in","an","um","zu","es","er","sie","man","bereits",
+    "erneut","jetzt","aktuell","neue","neuer","neues","neuen","neuer",
+    "diese","dieser","laut","berichtet","meldet","sagt","bestätigt",
+    "offiziell","aktuelle","weitere","deutsche","deutschen","deutscher",
+    "deutschland","news","eilmeldung","breaking","bericht","update",
+}
+
+def headline_tokens(title: str) -> set[str]:
+    norm = unicodedata.normalize("NFKD", title.casefold())
+    norm = "".join(c for c in norm if not unicodedata.combining(c))
+    words = re.findall(r"[a-z0-9]+", norm)
+    return {w for w in words if (len(w) >= 4 or any(c.isdigit() for c in w)
+            or w in {"hsv", "bvb", "spd", "afd", "bsw", "ki"})
+            and w not in TITLE_STOPWORDS}
+
+def is_same_event(a: dict, b: dict) -> bool:
+    if a.get("cat") != b.get("cat"):
+        return False
+    try:
+        days = abs((datetime.fromisoformat(a["date"][:10]) -
+                    datetime.fromisoformat(b["date"][:10])).days)
+        if days > 2:
+            return False
+    except (ValueError, KeyError):
+        return False
+    left, right = headline_tokens(a["title"]), headline_tokens(b["title"])
+    common = left & right
+    if len(common) < 3 or min(len(left), len(right)) < 4:
+        return False
+    # Widersprüchliche Flugnummern niemals als dasselbe Flugereignis bündeln.
+    flight_pattern = re.compile(r"^[a-z]{2,3}[0-9]{2,4}$")
+    flights_a = {w for w in left if flight_pattern.fullmatch(w)}
+    flights_b = {w for w in right if flight_pattern.fullmatch(w)}
+    if flights_a and flights_b and not flights_a.intersection(flights_b):
+        return False
+    jaccard = len(common) / max(1, len(left | right))
+    containment = len(common) / max(1, min(len(left), len(right)))
+    return jaccard >= 0.58 or (len(common) >= 4 and containment >= 0.84)
+
+def source_entries(story: dict) -> list[dict]:
+    existing = story.get("sources")
+    if isinstance(existing, list) and existing:
+        return [x for x in existing if isinstance(x, dict) and x.get("url")]
+    return [{
+        "source": story.get("source", "Quelle"),
+        "title": story["title"],
+        "url": story["url"],
+        "status": story.get("status", "report"),
+        "date": story.get("date", ""),
+        "id": story.get("id", ""),
+    }]
+
+def group_stories(stories) -> list[dict]:
+    """Mehrere Berichte zu *einem* Ereignis, inklusive Quellenlinks."""
+    candidates = sorted(stories,
+        key=lambda s: (s.get("date", ""), s.get("status") == "confirmed"),
+        reverse=True)
+    clusters = []
+    for story in candidates:
+        found = None
+        for group in clusters:
+            if any(is_same_event(story, existing) for existing in group):
+                found = group
+                break
+        if found is None:
+            clusters.append([story])
+        else:
+            found.append(story)
+    result = []
+    ranking = {"confirmed": 0, "report": 1, "rumor": 2}
+    for group in clusters:
+        # Bei mehreren Perspektiven bevorzugt eine offizielle Quelle.
+        main_story = sorted(group, key=lambda s: (
+            ranking.get(s.get("status"), 3), -int(s.get("date", "0000-00-00")[:10].replace("-", "") or "0")
+        ))[0]
+        merged = dict(main_story)
+        sources = []
+        urls = set()
+        for item in sorted(group, key=lambda s: (
+            ranking.get(s.get("status"), 3), s.get("source", "")
+        )):
+            for source in source_entries(item):
+                url = source.get("url", "")
+                if url and url not in urls:
+                    sources.append(source)
+                    urls.add(url)
+        merged["sources"] = sources[:18]
+        merged["source_count"] = len(sources)
+        merged["breaking"] = any(item.get("breaking") for item in group)
+        merged["date"] = max(item.get("date", "") for item in group)
+        merged["priority"] = min(item.get("priority", 5) for item in group)
+        result.append(merged)
+    return result
+
+
 def main():
     now = datetime.now(timezone.utc)
     today = now.date()
@@ -151,7 +256,7 @@ def main():
     unique = {story["id"]: story for story in curated}
     for story in fetched:
         unique[story["id"]] = story
-    stories = sorted(unique.values(), key=lambda x: x["date"], reverse=True)[:150]
+    stories = sorted(group_stories(unique.values()), key=lambda x: x["date"], reverse=True)[:150]
     output = {
         "generated_at": now.isoformat(timespec="seconds"),
         "mode": "Automatischer RSS-Abruf",
